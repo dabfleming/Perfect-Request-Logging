@@ -22,29 +22,38 @@ import PerfectHTTP
 import PerfectHTTPServer
 import PerfectRequestLogger
 
+// Convenience method to create simple handlers
+func makeHandler(str: String) -> RequestHandler {
+	return {
+		request, response in
+		response.setHeader(.contentType, value: "text/html")
+		response.appendBody(string: "<html><title>Perfect Server</title><body>Test: \(str)</body></html>")
+		response.completed()
+	}
+}
+
 // Create HTTP server.
 let server = HTTPServer()
 
 // Register your own routes and handlers
 var routes = Routes()
-routes.add(method: .get, uri: "/", handler: {
-		request, response in
-		response.setHeader(.contentType, value: "text/html")
-		response.appendBody(string: "<html><title>Hello, world!</title><body>Hello, world!</body></html>")
-		response.completed()
-	}
-)
 
+routes.add(method: .get, uri: "/one", handler: makeHandler(str: "One"))
+routes.add(method: .get, uri: "/two", handler: makeHandler(str: "Two"))
+routes.add(method: .get, uri: "/three", handler: makeHandler(str: "Three"))
+
+// Setup logging
 let myLogger = RequestLogger()
 
 server.setRequestFilters([(myLogger.requestFilter(), .high)])
-server.setResponseFilters([(myLogger.responseFilter(), .high)])
+server.setResponseFilters([(myLogger.responseFilter(), .low)])
 
 
 // Add the routes to the server.
 server.addRoutes(routes)
 
-server.serverName = "localhost"
+// Set a server name which will be shown in the logs
+server.serverName = "servername"
 
 // Set a listen port of 8181
 server.serverPort = 8181
