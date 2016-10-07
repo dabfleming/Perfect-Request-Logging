@@ -20,6 +20,7 @@
 import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
+import PerfectRequestLogger
 
 // Create HTTP server.
 let server = HTTPServer()
