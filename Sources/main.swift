@@ -1,8 +1,8 @@
 //
 //  main.swift
-//  PerfectTemplate
+//  PerfectRequestLogging Example
 //
-//  Created by Kyle Jessup on 2015-11-05.
+//  Created by David Fleming on 2016-10-04.
 //	Copyright (C) 2015 PerfectlySoft, Inc.
 //
 //===----------------------------------------------------------------------===//
